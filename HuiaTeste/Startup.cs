@@ -8,17 +8,21 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Configuration;
 
 namespace HuiaTeste
 {
     public class Startup
     {
-       // public Startup(IConfiguration )
+       public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DAL.Context.MyDbContext>(options => options.UseSqlServer("Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=DbHuiaTeste;Data Source=DESKTOP-505QC65\\SQLEXPRESS"));
-            //services.AddDbContext<DAL.Context.MyDbContext>(options => options.UseSqlServer(Configuration.Get));
+            services.AddDbContext<DAL.Context.MyDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
         }
 
