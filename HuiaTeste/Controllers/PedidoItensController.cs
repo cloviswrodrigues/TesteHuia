@@ -91,6 +91,7 @@ namespace HuiaTeste.Controllers
                 return BadRequest(ModelState);
             }
 
+            pedidoItem.produto = _context.Produtos.Find(pedidoItem.produtoid);
             _context.PedidoItens.Add(pedidoItem);
             await _context.SaveChangesAsync();
 

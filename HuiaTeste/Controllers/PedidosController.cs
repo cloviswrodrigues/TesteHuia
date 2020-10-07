@@ -111,8 +111,12 @@ namespace HuiaTeste.Controllers
             {
                 return BadRequest(ModelState);
             }
+                        
+            pedido.cliente = _context.Cadastros.Find(pedido.cliente.id);
+            pedido.vendedor = _context.Cadastros.Find(pedido.vendedor.id);
 
             _context.Pedidos.Add(pedido);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPedido", new { id = pedido.id }, pedido);
